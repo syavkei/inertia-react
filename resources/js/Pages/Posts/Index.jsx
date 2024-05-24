@@ -9,7 +9,9 @@ export default function Index({ auth, posts }) {
 
     function submit(e) {
         e.preventDefault();
-        post(route("posts.store"));
+        post(route("posts.store"), {
+            onSuccess: () => reset(),
+        });
     }
 
     return (
@@ -39,8 +41,11 @@ export default function Index({ auth, posts }) {
                                 onChange={(e) =>
                                     setData("title", e.target.value)
                                 }
+                                value={data.title}
                             />
-                            {errors.title}
+                            {errors.title && (
+                                <p className="text-red-500">{errors.title}</p>
+                            )}
                             <label className="sr-only">Body</label>
                             <textarea
                                 name="body"
@@ -51,8 +56,11 @@ export default function Index({ auth, posts }) {
                                 onChange={(e) =>
                                     setData("body", e.target.value)
                                 }
+                                value={data.body}
                             ></textarea>
-                            {errors.body}
+                            {errors.body && (
+                                <p className="text-red-500">{errors.body}</p>
+                            )}
                             <button
                                 type="submit"
                                 className="bg-gray-700 px-4 py-2 rounded-md text-white font-medium"

@@ -2,10 +2,11 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm } from "@inertiajs/react";
 
 export default function Index({ auth, posts }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        title: "",
-        body: "",
-    });
+    const { data, setData, post, processing, errors, reset, clearErrors } =
+        useForm({
+            title: "",
+            body: "",
+        });
 
     function submit(e) {
         e.preventDefault();
@@ -42,6 +43,7 @@ export default function Index({ auth, posts }) {
                                     setData("title", e.target.value)
                                 }
                                 value={data.title}
+                                onFocus={() => clearErrors("title")}
                             />
                             {errors.title && (
                                 <p className="text-red-500">{errors.title}</p>
@@ -57,6 +59,7 @@ export default function Index({ auth, posts }) {
                                     setData("body", e.target.value)
                                 }
                                 value={data.body}
+                                onFocus={() => clearErrors("body")}
                             ></textarea>
                             {errors.body && (
                                 <p className="text-red-500">{errors.body}</p>

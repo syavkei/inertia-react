@@ -66,7 +66,10 @@ export default function Index({ auth, posts }) {
                             )}
                             <button
                                 type="submit"
-                                className="bg-gray-700 px-4 py-2 rounded-md text-white font-medium"
+                                disabled={processing}
+                                className={`bg-gray-700 px-4 py-2 rounded-md text-white font-medium ${
+                                    processing && "opacity-25"
+                                }`}
                             >
                                 Post
                             </button>

@@ -13,7 +13,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('user')->latest()->get();
-        return Inertia::render('Posts/Index', ['posts' => PostResource::collection($posts)]);
+        $now = now();
+        return Inertia::render('Posts/Index', ['posts' => PostResource::collection($posts), 'now' => $now]);
     }
 
     public function store(StorePostRequest $request)

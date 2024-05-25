@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 
 export default function Index({ auth, posts }) {
     const { data, setData, post, processing, errors, reset, clearErrors } =
@@ -12,6 +12,21 @@ export default function Index({ auth, posts }) {
         e.preventDefault();
         post(route("posts.store"), {
             onSuccess: () => reset(),
+        });
+    }
+
+    function refreshPosts(e) {
+        // router.get(
+        //     route("posts.index"),
+        //     {},
+        //     {
+        //         only: ["posts"],
+        //         preserveScroll: true,
+        //     }
+        // );
+        router.visit(route("posts.index"), {
+            only: ["posts"],
+            preserveScroll: true,
         });
     }
 
@@ -76,6 +91,14 @@ export default function Index({ auth, posts }) {
                         </form>
                     </div>
                 </div>
+            </div>
+            <div className="py-3 flex justify-center">
+                <button
+                    className="text-sm text-indigo-700"
+                    onClick={refreshPosts}
+                >
+                    Refresh Posts
+                </button>
             </div>
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

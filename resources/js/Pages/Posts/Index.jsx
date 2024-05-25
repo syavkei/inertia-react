@@ -1,5 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, router, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm, usePage } from "@inertiajs/react";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 export default function Index({ auth, posts }) {
     const { data, setData, post, processing, errors, reset, clearErrors } =
@@ -8,10 +10,26 @@ export default function Index({ auth, posts }) {
             body: "",
         });
 
+    const page = usePage();
+
+    useEffect(() => {
+        if (page?.props?.message?.body) {
+            toast(page.props.message.body, {
+                type: page.props.message.type,
+                position: "top-right",
+            });
+        }
+    }, [page.props.message]);
+
     function submit(e) {
         e.preventDefault();
         post(route("posts.store"), {
-            onSuccess: () => reset(),
+            onSuccess: () => {
+                reset();
+                // toast.success("Post saved successfuly", {
+                //     position: "top-right",
+                // });
+            },
         });
     }
 
@@ -99,6 +117,16 @@ export default function Index({ auth, posts }) {
                 >
                     Refresh Posts
                 </button>
+                {/* <Link
+                    href={route("posts.index")}
+                    only={["posts"]}
+                    preserveScroll
+                    className="text-sm text-indigo-700"
+                    onClick={refreshPosts}
+                    type="button"
+                >
+                    Refresh Posts
+                </Link> */}
             </div>
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
